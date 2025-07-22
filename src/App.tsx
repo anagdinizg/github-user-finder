@@ -16,10 +16,12 @@ export default function App() {
         <NavLink to="/history">Histórico</NavLink>
       </nav>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/history" element={<History />} />
-      </Routes>
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/history" element={<History />} />
+        </Routes>
+      </main>
     </Router>
   );
 }
