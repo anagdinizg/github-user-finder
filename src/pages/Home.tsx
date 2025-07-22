@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getUserFromGithub } from "../api/githubService";
 import { getFromCache, saveToCache } from "../services/cacheService";
+import { saveToHistory } from "../services/historyService";
 import { UserCard } from "../components/UserCard";
 import type { User } from "../types/User";
 
@@ -24,6 +25,7 @@ export function Home() {
       const data = await getUserFromGithub(userToSearch);
       setUser(data);
       saveToCache(userToSearch, data);
+      saveToHistory(userToSearch);
     } catch {
       setError("Usuário não encontrado");
     }
