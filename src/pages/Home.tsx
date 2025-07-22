@@ -44,19 +44,32 @@ export function Home() {
   };
 
   return (
-    <div className="home-container">
-      <h1>Buscar Usuário do GitHub</h1>
-      <div className="search-area">
+    <div className="text-center px-4 sm:px-6 lg:px-8">
+      <h1 className="text-3xl sm:text-4xl font-serif mb-8 mt-6 text-brown-dark">
+        Buscar Usuário do GitHub
+      </h1>
+      <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8 max-w-xl mx-auto">
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Digite o username"
+          className="border border-brown rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brown-dark focus:border-transparent flex-grow bg-beige text-brown-dark placeholder-brown"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSearch();
+          }}
         />
-        <button onClick={handleSearch}>Buscar</button>
+        <button
+          onClick={handleSearch}
+          className="bg-brown text-beige rounded-md px-6 py-2 hover:bg-brown-dark transition font-semibold"
+        >
+          Buscar
+        </button>
       </div>
 
-      {error && <p className="error">{error}</p>}
+      {error && (
+        <p className="text-red-600 mb-6 text-center font-medium">{error}</p>
+      )}
       {user && <UserCard user={user} />}
     </div>
   );
