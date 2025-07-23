@@ -11,6 +11,7 @@ Desenvolvido com **React + TypeScript**, estilizado com **TailwindCSS** de forma
 - Buscar usuários do GitHub pelo nome
 - Cache local dos dados para evitar requisições repetidas
 - Histórico de buscas persistido no localStorage
+- Visualizar usuários com mais seguidores do GitHub
 
 ---
 
