@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getUserFromGithub } from "../api/githubService";
+import { getUserFromGithub, getTopFollowedUsers } from "../api/githubService";
 import { getFromCache, saveToCache } from "../services/cacheService";
 import { saveToHistory } from "../services/historyService";
 import { UserCard } from "../components/UserCard";
@@ -11,6 +11,7 @@ export function Home() {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState("");
+  const [topUsers, setTopUsers] = useState<User[]>([]);
 
   const fetchUser = async (userToSearch: string) => {
     setError("");
@@ -39,6 +40,12 @@ export function Home() {
     }
   }, [searchParams]);
 
+  useEffect(() => {
+    getTopFollowedUsers()
+      .then(setTopUsers)
+      .catch((err) => console.error("Erro ao buscar top usuários", err));
+  }, []);
+
   const handleSearch = () => {
     if (username.trim()) {
       fetchUser(username.trim());
@@ -46,7 +53,7 @@ export function Home() {
   };
 
   return (
-    <div className="text-center px-4 sm:px-6 lg:px-8">
+    <div className="text-center px-4 sm:px-6 lg:px-0">
       <h1 className="text-3xl sm:text-4xl font-serif mb-8 mt-6 text-brown-dark">
         Buscar Usuário do GitHub
       </h1>
@@ -73,6 +80,19 @@ export function Home() {
         <p className="text-red-600 mb-6 text-center font-medium">{error}</p>
       )}
       {user && <UserCard user={user} />}
+
+      {topUsers.length > 0 && (
+        <section className="mt-12">
+          <h2 className="text-2xl sm:text-3xl font-serif mb-6 text-brown-dark">
+            Usuários com mais seguidores no GitHub
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {topUsers.map((topUser) => (
+              <UserCard key={topUser.login} user={topUser} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

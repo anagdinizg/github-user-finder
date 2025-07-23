@@ -10,6 +10,7 @@ const mockUser: User = {
   location: "Paraíba",
   followers: 100,
   public_repos: 42,
+  html_url: "https://github.com/anagdinizg",
 };
 
 describe("UserCard", () => {
@@ -20,5 +21,10 @@ describe("UserCard", () => {
     expect(screen.getByText(/Paraíba/)).toBeInTheDocument();
     expect(screen.getByText(/100 seguidores/)).toBeInTheDocument();
     expect(screen.getByText(/42 repositórios/)).toBeInTheDocument();
+
+    const link = screen.getByRole("link", { name: /ver no github/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", mockUser.html_url);
+    expect(link).toHaveAttribute("target", "_blank");
   });
 });

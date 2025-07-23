@@ -11,6 +11,7 @@ describe("cacheService", () => {
     location: "Paraíba",
     followers: 100,
     public_repos: 42,
+    html_url: "https://github.com/anagdinizg",
   };
 
   beforeEach(() => {
